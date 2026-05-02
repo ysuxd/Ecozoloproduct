@@ -1,7 +1,7 @@
-﻿<Window x:Class="WpfApp2.UsersWindow"
+﻿<Window x:Class="WpfApp2.RoleWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Управление пользователями" 
+        Title="Управление ролями" 
         WindowState="Maximized"
         WindowStartupLocation="CenterScreen"
         Background="#F5F0E8">
@@ -14,8 +14,6 @@
         <SolidColorBrush x:Key="GreenColor" Color="#5A8F4C"/>
         <SolidColorBrush x:Key="DarkGreenColor" Color="#3D6B2E"/>
         <SolidColorBrush x:Key="LightGreenColor" Color="#7BAF6A"/>
-        <SolidColorBrush x:Key="OliveGreenColor" Color="#8B9A6E"/>
-        <SolidColorBrush x:Key="BrownColor" Color="#8B7355"/>
         <SolidColorBrush x:Key="WhiteColor" Color="#FFFFFF"/>
         <SolidColorBrush x:Key="TextColor" Color="#4A3728"/>
 
@@ -99,31 +97,7 @@
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="CaretBrush" Value="{StaticResource GreenColor}"/>
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        </Style>
-
-        <Style TargetType="PasswordBox">
-            <Setter Property="Height" Value="38"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Background" Value="{StaticResource WhiteColor}"/>
-            <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource DarkBeigeColor}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="Padding" Value="10,0"/>
-            <Setter Property="FontSize" Value="13"/>
-            <Setter Property="CaretBrush" Value="{StaticResource GreenColor}"/>
-        </Style>
-
-        <Style TargetType="ComboBox">
-            <Setter Property="Height" Value="38"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Background" Value="{StaticResource WhiteColor}"/>
-            <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource DarkBeigeColor}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="Padding" Value="8,0"/>
-            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
         <!-- Стиль для DataGrid -->
@@ -164,7 +138,7 @@
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
             <Setter Property="FontSize" Value="13"/>
-            <Setter Property="MinWidth" Value="50"/>
+            <Setter Property="MinWidth" Value="100"/>
         </Style>
 
         <Style x:Key="PageHeaderStyle" TargetType="Border">
@@ -184,7 +158,7 @@
         <!-- Заголовок -->
         <Border Grid.Row="0" Style="{StaticResource PageHeaderStyle}">
             <Grid>
-                <TextBlock Text="🌿 УПРАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯМИ 🌿" 
+                <TextBlock Text="👥 УПРАВЛЕНИЕ РОЛЯМИ 👥" 
                            FontSize="24" 
                            FontWeight="Bold" 
                            Foreground="{StaticResource WhiteColor}" 
@@ -194,15 +168,15 @@
             </Grid>
         </Border>
 
-        <!-- Таблица данных - столбцы растягиваются по ширине -->
-        <DataGrid x:Name="UsersDataGrid" Grid.Row="1" 
+        <!-- Таблица данных -->
+        <DataGrid x:Name="RolesDataGrid" Grid.Row="1" 
                   AutoGenerateColumns="False" 
                   CanUserAddRows="False" 
                   CanUserDeleteRows="False"
                   SelectionMode="Single" 
                   SelectionUnit="FullRow"
                   Margin="0,10,0,10"
-                  SelectionChanged="UsersDataGrid_SelectionChanged"
+                  SelectionChanged="RolesDataGrid_SelectionChanged"
                   AlternatingRowBackground="{StaticResource BeigeColor}"
                   RowBackground="{StaticResource WhiteColor}"
                   BorderBrush="{StaticResource DarkBeigeColor}"
@@ -219,66 +193,26 @@
             </DataGrid.Resources>
 
             <DataGrid.Columns>
-                <!-- ID - фиксированная ширина, текст по центру -->
-                <DataGridTextColumn Header="ID" Binding="{Binding UserId}" Width="60">
+                <!-- ID роли - фиксированная ширина, текст по центру -->
+                <DataGridTextColumn Header="ID роли" Binding="{Binding RoleId}" Width="120">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
                             <Setter Property="FontWeight" Value="Bold"/>
                             <Setter Property="Foreground" Value="{StaticResource GreenColor}"/>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
 
-                <!-- Логин -->
-                <DataGridTextColumn Header="Логин" Binding="{Binding Login}" Width="2*">
+                <!-- Название роли - занимает всё оставшееся пространство, текст по центру -->
+                <DataGridTextColumn Header="Название роли" Binding="{Binding RoleName}" Width="*">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
                             <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
                             <Setter Property="FontWeight" Value="SemiBold"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-
-                <!-- Пароль -->
-                <DataGridTextColumn Header="Пароль" Binding="{Binding Password}" Width="1.5*">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Foreground" Value="{StaticResource BrownColor}"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-
-                <!-- Роль - текст по центру -->
-                <DataGridTextColumn Header="Роль" Binding="{Binding Role}" Width="1.5*">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="Foreground" Value="{StaticResource DarkGreenColor}"/>
-                            <Setter Property="FontWeight" Value="SemiBold"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-
-                <!-- Заблокирован - фиксированная ширина -->
-                <DataGridCheckBoxColumn Header="Заблокирован" Binding="{Binding IsBlocked}" Width="110">
-                    <DataGridCheckBoxColumn.ElementStyle>
-                        <Style TargetType="CheckBox">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                        </Style>
-                    </DataGridCheckBoxColumn.ElementStyle>
-                </DataGridCheckBoxColumn>
-
-                <!-- Дата последнего входа - текст по центру -->
-                <DataGridTextColumn Header="Дата последнего входа" Width="2*">
-                    <DataGridTextColumn.Binding>
-                        <Binding Path="LastLoginDate" StringFormat="dd.MM.yyyy HH:mm"/>
-                    </DataGridTextColumn.Binding>
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="Foreground" Value="{StaticResource OliveGreenColor}"/>
-                            <Setter Property="FontSize" Value="11"/>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
@@ -298,39 +232,27 @@
 
                 <!-- Заголовок панели -->
                 <Border Grid.Row="0" Background="{StaticResource LightBeigeColor}" CornerRadius="5" Padding="12" Margin="0,0,0,15">
-                    <TextBlock Text="📝 Добавление / Редактирование пользователя" 
+                    <TextBlock Text="📝 Добавление / Редактирование роли" 
                                FontSize="15" 
                                FontWeight="Bold" 
                                Foreground="{StaticResource GreenColor}"
                                FontFamily="Segoe UI"/>
                 </Border>
 
-                <!-- Панель ввода данных - горизонтальное расположение -->
-                <WrapPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center">
-                    <!-- Логин -->
-                    <TextBlock Text="Логин:" Style="{StaticResource LabelStyle}" VerticalAlignment="Center"/>
-                    <TextBox x:Name="LoginTextBox" Width="160" Height="38" VerticalAlignment="Center"/>
-
-                    <!-- Пароль -->
-                    <TextBlock Text="Пароль:" Style="{StaticResource LabelStyle}" VerticalAlignment="Center" Margin="15,0,5,0"/>
-                    <PasswordBox x:Name="PassBox" Width="160" Height="38" VerticalAlignment="Center"/>
-
-                    <!-- Роль -->
-                    <TextBlock Text="Роль:" Style="{StaticResource LabelStyle}" VerticalAlignment="Center" Margin="15,0,5,0"/>
-                    <ComboBox x:Name="RoleBox" Width="160" Height="38" VerticalAlignment="Center">
-                        <ComboBoxItem Content="Администратор" Foreground="#5A8F4C" Background="#FFFFFF"/>
-                        <ComboBoxItem Content="Пользователь" Foreground="#5A8F4C" Background="#FFFFFF"/>
-                        <ComboBoxItem Content="Модератор" Foreground="#5A8F4C" Background="#FFFFFF"/>
-                    </ComboBox>
+                <!-- Панель ввода данных - строка, а не столбец -->
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <!-- Название роли -->
+                    <TextBlock Text="Название роли:" Style="{StaticResource LabelStyle}" VerticalAlignment="Center"/>
+                    <TextBox x:Name="RoleNameTextBox" Width="250" Height="38" 
+                             VerticalAlignment="Center"
+                             ToolTip="Введите название роли"/>
 
                     <!-- Кнопки -->
                     <Button x:Name="AddButton" Content="➕ Добавить" Style="{StaticResource GreenButtonStyle}" Click="AddButton_Click"/>
                     <Button x:Name="UpdateButton" Content="✏️ Обновить" Style="{StaticResource GreenButtonStyle}" Click="UpdateButton_Click"/>
                     <Button x:Name="DeleteButton" Content="🗑 Удалить" Style="{StaticResource BeigeButtonStyle}" Click="DeleteButton_Click"/>
-                    <Button x:Name="BlockButton" Content="🔒 Блокировать" Style="{StaticResource BeigeButtonStyle}" Click="BlockButton_Click"/>
-                    <Button x:Name="UnblockButton" Content="🔓 Разблокировать" Style="{StaticResource BeigeButtonStyle}" Click="UnblockButton_Click"/>
-                    <Button x:Name="RefreshButton" Content="🔄 Обновить" Style="{StaticResource GreenButtonStyle}" Click="RefreshButton_Click"/>
-                </WrapPanel>
+                    <Button x:Name="RefreshButton" Content="🔄 Обновить список" Style="{StaticResource GreenButtonStyle}" Click="RefreshButton_Click"/>
+                </StackPanel>
             </Grid>
         </Border>
     </Grid>
