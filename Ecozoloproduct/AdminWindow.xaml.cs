@@ -91,5 +91,12 @@ namespace WpfApp2
                 this.Close();
             }
         }
+
+        private void EfficiencyButton_Click(object sender, RoutedEventArgs e)
+        {
+            EfficiencyWindow efficiencyWindow = new EfficiencyWindow("Администратор", currentUser);
+            efficiencyWindow.Show();
+            this.Close();
+        }
     }
 }

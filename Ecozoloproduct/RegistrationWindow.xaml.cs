@@ -171,7 +171,7 @@ namespace WpfApp2
                     }
 
                     // Добавление пользователя
-                    string insertQuery = "INSERT INTO users (login, password, roleid, isblocked) VALUES (@login, @password, @roleid, FALSE)";
+                    string insertQuery = "INSERT INTO users (login, password, roleid, isblocked, attempts) VALUES (@login, @password, @roleid, FALSE, 0)";
                     using (var insertCmd = new NpgsqlCommand(insertQuery, connection))
                     {
                         insertCmd.Parameters.AddWithValue("@login", login);

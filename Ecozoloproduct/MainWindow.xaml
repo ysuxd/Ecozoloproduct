@@ -26,8 +26,8 @@
             <Setter Property="Background" Value="{StaticResource GreenColor}"/>
             <Setter Property="Foreground" Value="{StaticResource WhiteColor}"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Height" Value="45"/>
-            <Setter Property="Width" Value="120"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="100"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="FontSize" Value="14"/>
@@ -58,7 +58,7 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="{StaticResource GreenColor}"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Height" Value="45"/>
+            <Setter Property="Height" Value="40"/>
             <Setter Property="Width" Value="120"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="BorderThickness" Value="1"/>
@@ -88,17 +88,17 @@
 
         <!-- Стиль для текстовых полей -->
         <Style TargetType="TextBox">
-            <Setter Property="Height" Value="42"/>
+            <Setter Property="Height" Value="38"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Background" Value="{StaticResource WhiteColor}"/>
             <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
             <Setter Property="BorderBrush" Value="{StaticResource DarkBeigeColor}"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Padding" Value="15,0"/>
+            <Setter Property="Padding" Value="12,0"/>
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="CaretBrush" Value="{StaticResource GreenColor}"/>
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-            <Setter Property="Margin" Value="0,3,0,12"/>
+            <Setter Property="Margin" Value="0,3,0,10"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
@@ -124,19 +124,57 @@
         </Style>
 
         <Style TargetType="PasswordBox">
-            <Setter Property="Height" Value="42"/>
+            <Setter Property="Height" Value="38"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Background" Value="{StaticResource WhiteColor}"/>
             <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
             <Setter Property="BorderBrush" Value="{StaticResource DarkBeigeColor}"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Padding" Value="15,0"/>
+            <Setter Property="Padding" Value="12,0"/>
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="CaretBrush" Value="{StaticResource GreenColor}"/>
-            <Setter Property="Margin" Value="0,3,0,12"/>
+            <Setter Property="Margin" Value="0,3,0,10"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="PasswordBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10"
+                                Padding="{TemplateBinding Padding}">
+                            <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource GreenColor}"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="{StaticResource GreenColor}"/>
+                                <Setter Property="BorderThickness" Value="2"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Стиль для поля капчи -->
+        <Style x:Key="CaptchaTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="Width" Value="180"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="{StaticResource WhiteColor}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource DarkBeigeColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12,0"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="CaretBrush" Value="{StaticResource GreenColor}"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
                         <Border Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
@@ -167,7 +205,7 @@
 
     <Grid Background="{StaticResource BeigeColor}">
         <Border Width="1100" 
-                Height="650"
+                Height="680"
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center"
                 Background="White"
@@ -193,8 +231,8 @@
 
                     <!-- ЛЕВАЯ ЧАСТЬ: Карточка авторизации -->
                     <Border Grid.Column="0" 
-                            Width="420" 
-                            Height="520"
+                            Width="460" 
+                            Height="560"
                             Background="{StaticResource FormBeigeColor}"
                             CornerRadius="20"
                             BorderBrush="{StaticResource DarkBeigeColor}"
@@ -203,6 +241,7 @@
 
                         <Grid Margin="30">
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
@@ -224,12 +263,12 @@
                                        HorizontalAlignment="Center"
                                        Margin="0,0,0,15"/>
 
-                            <Border Grid.Row="2" Width="70" Height="70" 
+                            <Border Grid.Row="2" Width="65" Height="65" 
                                     Background="{StaticResource WhiteColor}" 
-                                    CornerRadius="35"
+                                    CornerRadius="32.5"
                                     HorizontalAlignment="Center"
                                     Margin="0,0,0,10">
-                                <TextBlock Text="👤" FontSize="38" 
+                                <TextBlock Text="👤" FontSize="35" 
                                            HorizontalAlignment="Center" 
                                            VerticalAlignment="Center"/>
                             </Border>
@@ -239,7 +278,7 @@
                                        FontSize="12" 
                                        Foreground="{StaticResource OliveGreenColor}"
                                        HorizontalAlignment="Center"
-                                       Margin="0,0,0,20"/>
+                                       Margin="0,0,0,15"/>
 
                             <StackPanel Grid.Row="4" Margin="0,0,0,10">
                                 <TextBlock Text="ЛОГИН" FontWeight="SemiBold" 
@@ -249,7 +288,7 @@
                                 <TextBox x:Name="LoginTextBox"/>
                             </StackPanel>
 
-                            <StackPanel Grid.Row="5" Margin="0,0,0,20">
+                            <StackPanel Grid.Row="5" Margin="0,0,0,15">
                                 <TextBlock Text="ПАРОЛЬ" FontWeight="SemiBold" 
                                            Foreground="{StaticResource TextColor}" 
                                            FontSize="11"
@@ -257,8 +296,83 @@
                                 <PasswordBox x:Name="PasswordBox"/>
                             </StackPanel>
 
-                            <!-- Кнопки входа и регистрации рядом -->
-                            <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
+                            <!-- Капча -->
+                            <StackPanel Grid.Row="6" Margin="0,0,0,15">
+                                <TextBlock Text="ВВЕДИТЕ КОД С КАРТИНКИ" FontWeight="SemiBold" 
+                                           Foreground="{StaticResource TextColor}" 
+                                           FontSize="11"
+                                           Margin="0,0,0,5"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Блок с кодом капчи -->
+                                    <Border Grid.Column="0" Width="130" Height="45" 
+                                            Background="{StaticResource LightBeigeColor}"
+                                            CornerRadius="10"
+                                            BorderBrush="{StaticResource DarkBeigeColor}"
+                                            BorderThickness="1">
+                                        <TextBlock x:Name="CaptchaTextBlock" 
+                                                   Text="A1B2C" 
+                                                   FontSize="20" 
+                                                   FontWeight="Bold"
+                                                   FontFamily="Courier New"
+                                                   Foreground="{StaticResource DarkGreenColor}"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"/>
+                                    </Border>
+
+                                    <!-- Кнопка обновления капчи (квадратная с иконкой) -->
+                                    <Button x:Name="RefreshCaptchaButton" 
+                                            Grid.Column="1"
+                                            Width="45" 
+                                            Height="45"
+                                            Margin="10,0,10,0"
+                                            Background="{StaticResource GreenColor}"
+                                            Foreground="White"
+                                            FontSize="20"
+                                            FontWeight="Bold"
+                                            Cursor="Hand"
+                                            BorderThickness="0"
+                                            Click="RefreshCaptchaButton_Click"
+                                            ToolTip="Обновить код">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}" 
+                                                        CornerRadius="10" 
+                                                        BorderThickness="0">
+                                                    <ContentPresenter HorizontalAlignment="Center" 
+                                                                      VerticalAlignment="Center"/>
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="{StaticResource LightGreenColor}"/>
+                                                    </Trigger>
+                                                    <Trigger Property="IsPressed" Value="True">
+                                                        <Setter Property="Background" Value="{StaticResource DarkGreenColor}"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                        <TextBlock Text="🔄" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Button>
+
+                                    <!-- Поле ввода капчи -->
+                                    <TextBox x:Name="CaptchaTextBox" 
+                                             Grid.Column="2"
+                                             Width="180"
+                                             Height="45"
+                                             HorizontalAlignment="Left"
+                                             Style="{StaticResource CaptchaTextBoxStyle}"
+                                             ToolTip="Введите код с картинки"/>
+                                </Grid>
+                            </StackPanel>
+
+                            <!-- Кнопки -->
+                            <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
                                 <Button x:Name="LoginButton" 
                                         Content="ВОЙТИ" 
                                         Style="{StaticResource LoginButtonStyle}" 
@@ -270,7 +384,7 @@
                                         Click="RegisterButton_Click"/>
                             </StackPanel>
 
-                            <TextBlock x:Name="ErrorTextBlock" Grid.Row="7" 
+                            <TextBlock x:Name="ErrorTextBlock" Grid.Row="8" 
                                        Foreground="{StaticResource ErrorColor}" 
                                        HorizontalAlignment="Center" 
                                        FontSize="11"
@@ -360,10 +474,7 @@
                             </StackPanel>
                         </Border>
 
-                        <TextBlock Text="Для получения доступа обратитесь к системному администратору"
-                                   FontSize="11"
-                                   Foreground="{StaticResource OliveGreenColor}"
-                                   TextWrapping="Wrap"/>
+                        
                     </StackPanel>
                 </Grid>
             </Grid>

@@ -10,7 +10,7 @@
         <!-- Стиль для кнопок меню -->
         <Style x:Key="MenuButtonStyle" TargetType="Button">
             <Setter Property="Width" Value="220"/>
-            <Setter Property="Height" Value="50"/>
+            <Setter Property="Height" Value="45"/>
             <Setter Property="Margin" Value="8"/>
             <Setter Property="Background" Value="#5A8F4C"/>
             <Setter Property="Foreground" Value="White"/>
@@ -43,8 +43,8 @@
         <!-- Стиль для маленьких кнопок -->
         <Style x:Key="SmallMenuButtonStyle" TargetType="Button">
             <Setter Property="Width" Value="200"/>
-            <Setter Property="Height" Value="45"/>
-            <Setter Property="Margin" Value="6"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="5"/>
             <Setter Property="Background" Value="#5A8F4C"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontWeight" Value="Bold"/>
@@ -73,9 +73,42 @@
             </Setter>
         </Style>
 
+        <!-- Стиль для кнопки эффективности -->
+        <Style x:Key="EfficiencyButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="220"/>
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="Margin" Value="8"/>
+            <Setter Property="Background" Value="#3498DB"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="8" 
+                                BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#5DADE2"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#2E86C1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="ExitButtonStyle" TargetType="Button">
             <Setter Property="Width" Value="150"/>
-            <Setter Property="Height" Value="50"/>
+            <Setter Property="Height" Value="45"/>
             <Setter Property="Margin" Value="8"/>
             <Setter Property="Background" Value="#E8DCC8"/>
             <Setter Property="Foreground" Value="#4A3728"/>
@@ -104,76 +137,83 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <!-- Стиль для Expander -->
+        <Style TargetType="Expander">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E8DCC8"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#5A8F4C"/>
+        </Style>
     </Window.Resources>
 
-    <Grid Margin="20" Background="#F5F0E8">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="20" Background="#F5F0E8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-        <!-- Заголовок -->
-        <Border Grid.Row="0" Background="#5A8F4C" CornerRadius="8" Margin="0,0,0,15">
-            <Grid>
-                <TextBlock Text="👑 ПАНЕЛЬ АДМИНИСТРАТОРА 👑" 
-                           FontSize="24" 
-                           FontWeight="Bold" 
-                           Foreground="White" 
-                           HorizontalAlignment="Center" 
-                           Margin="20,15"
-                           FontFamily="Segoe UI"/>
-            </Grid>
-        </Border>
+            <!-- Заголовок -->
+            <Border Grid.Row="0" Background="#5A8F4C" CornerRadius="8" Margin="0,0,0,15">
+                <Grid>
+                    <TextBlock Text="👑 ПАНЕЛЬ АДМИНИСТРАТОРА 👑" 
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               Foreground="White" 
+                               HorizontalAlignment="Center" 
+                               Margin="20,15"
+                               FontFamily="Segoe UI"/>
+                </Grid>
+            </Border>
 
-        <!-- Панель управления - Первая строка: Пользователи и роли -->
-        <Border Grid.Row="1" Background="White" CornerRadius="8" Padding="15" Margin="0,0,0,10"
-                BorderBrush="#E8DCC8" BorderThickness="1">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button x:Name="UsersButton" Content="👥 Управление пользователями" Style="{StaticResource MenuButtonStyle}" Click="UsersButton_Click"/>
-                <Button x:Name="RolesButton" Content="🔑 Управление ролями" Style="{StaticResource MenuButtonStyle}" Click="RolesButton_Click"/>
+            <!-- Контейнер с выпадающими списками -->
+            <StackPanel Grid.Row="1">
+
+                <!-- Раздел 1: Управление пользователями -->
+                <Expander Header="👥 УПРАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯМИ" IsExpanded="True">
+                    <WrapPanel Margin="10,15,10,10">
+                        <Button x:Name="UsersButton" Content="👥 Пользователи" Style="{StaticResource SmallMenuButtonStyle}" Click="UsersButton_Click"/>
+                        <Button x:Name="RolesButton" Content="🔑 Роли" Style="{StaticResource SmallMenuButtonStyle}" Click="RolesButton_Click"/>
+                    </WrapPanel>
+                </Expander>
+
+                <!-- Раздел 2: Справочники -->
+                <Expander Header="📚 СПРАВОЧНИКИ" IsExpanded="False">
+                    <WrapPanel Margin="10,15,10,10">
+                        <Button x:Name="StatusButton" Content="📊 Состояния" Style="{StaticResource SmallMenuButtonStyle}" Click="StatusButton_Click"/>
+                        <Button x:Name="EquipmentButton" Content="🏭 Оборудование" Style="{StaticResource SmallMenuButtonStyle}" Click="EquipmentButton_Click"/>
+                    </WrapPanel>
+                </Expander>
+
+                <!-- Раздел 3: Учет работы -->
+                <Expander Header="📝 УЧЕТ РАБОТЫ" IsExpanded="False">
+                    <WrapPanel Margin="10,15,10,10">
+                        <Button x:Name="ShiftsButton" Content="⏰ Смены" Style="{StaticResource SmallMenuButtonStyle}" Click="ShiftsButton_Click"/>
+                        <Button x:Name="ShiftDetailsButton" Content="📋 Детали смен" Style="{StaticResource SmallMenuButtonStyle}" Click="ShiftDetailsButton_Click"/>
+                        <Button x:Name="DowntimeRecordButton" Content="⚠️ Простои" Style="{StaticResource SmallMenuButtonStyle}" Click="DowntimeRecordButton_Click"/>
+                    </WrapPanel>
+                </Expander>
+
+                <!-- Раздел 4: Аналитика -->
+                <Expander Header="📊 АНАЛИТИКА" IsExpanded="False">
+                    <WrapPanel Margin="10,15,10,10">
+                        <Button x:Name="EfficiencyButton" Content="📈 Эффективность OEE" Style="{StaticResource EfficiencyButtonStyle}" Click="EfficiencyButton_Click"/>
+                    </WrapPanel>
+                </Expander>
+
+                <!-- Раздел 5: Система -->
+                <Expander Header="⚙️ СИСТЕМА" IsExpanded="False">
+                    <WrapPanel Margin="10,15,10,10">
+                        <Button x:Name="ExitButton" Content="🚪 Выход" Style="{StaticResource ExitButtonStyle}" Click="ExitButton_Click"/>
+                    </WrapPanel>
+                </Expander>
+
             </StackPanel>
-        </Border>
-
-        <!-- Панель управления - Вторая строка: Справочники -->
-        <Border Grid.Row="2" Background="White" CornerRadius="8" Padding="15" Margin="0,0,0,10"
-                BorderBrush="#E8DCC8" BorderThickness="1">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button x:Name="StatusButton" Content="📊 Управление состояниями" Style="{StaticResource MenuButtonStyle}" Click="StatusButton_Click"/>
-                <Button x:Name="EquipmentButton" Content="🏭 Управление оборудованием" Style="{StaticResource MenuButtonStyle}" Click="EquipmentButton_Click"/>
-                
-            </StackPanel>
-        </Border>
-
-        <!-- Панель управления - Третья строка: Учет работы -->
-        <Border Grid.Row="3" Background="White" CornerRadius="8" Padding="15" Margin="0,0,0,15"
-                BorderBrush="#E8DCC8" BorderThickness="1">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button x:Name="ShiftsButton" Content="⏰ Управление сменами" Style="{StaticResource SmallMenuButtonStyle}" Click="ShiftsButton_Click"/>
-                <Button x:Name="ShiftDetailsButton" Content="📋 Детали смен" Style="{StaticResource SmallMenuButtonStyle}" Click="ShiftDetailsButton_Click"/>
-                <Button x:Name="DowntimeRecordButton" Content="⚠️ Учет простоев" Style="{StaticResource SmallMenuButtonStyle}" Click="DowntimeRecordButton_Click"/>
-                <Button x:Name="ExitButton" Content="🚪 Выход" Style="{StaticResource ExitButtonStyle}" Click="ExitButton_Click"/>
-            </StackPanel>
-        </Border>
-
-        <!-- Информационная панель -->
-        <Border Grid.Row="4" Background="White" CornerRadius="8" Padding="20" Margin="0,5,0,0"
-                BorderBrush="#E8DCC8" BorderThickness="1">
-            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock Text="📊 Добро пожаловать в систему управления!" 
-                           FontSize="18" 
-                           FontWeight="Bold" 
-                           Foreground="#4A3728"
-                           HorizontalAlignment="Center"
-                           Margin="0,0,0,20"/>
-                <TextBlock Text="Вы можете управлять пользователями, ролями, справочниками и вести учет работы оборудования" 
-                           FontSize="14" 
-                           Foreground="#8B9A6E"
-                           HorizontalAlignment="Center"
-                           TextWrapping="Wrap"/>
-            </StackPanel>
-        </Border>
-    </Grid>
+        </Grid>
+    </ScrollViewer>
 </Window>

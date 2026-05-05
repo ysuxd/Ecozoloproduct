@@ -1,0 +1,133 @@
+﻿<Window x:Class="WpfApp2.ChartWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        Title="Диаграмма эффективности" 
+        Width="1100" 
+        Height="650"
+        WindowStartupLocation="CenterOwner"
+        Background="#F5F0E8"
+        ResizeMode="CanResize">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="GreenColor" Color="#5A8F4C"/>
+        <SolidColorBrush x:Key="DarkGreenColor" Color="#3D6B2E"/>
+        <SolidColorBrush x:Key="WhiteColor" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="LightBeigeColor" Color="#FAF6EF"/>
+        <SolidColorBrush x:Key="DarkBeigeColor" Color="#E8DCC8"/>
+
+        <Style x:Key="GreenButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource GreenColor}"/>
+            <Setter Property="Foreground" Value="{StaticResource WhiteColor}"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="MinWidth" Value="100"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="15,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource DarkGreenColor}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CloseButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#E74C3C"/>
+            <Setter Property="Foreground" Value="{StaticResource WhiteColor}"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="MinWidth" Value="100"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="15,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#C0392B"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="LegendItemStyle" TargetType="StackPanel">
+            <Setter Property="Margin" Value="5,3"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок -->
+        <Border Grid.Row="0" Background="{StaticResource GreenColor}" CornerRadius="8" Margin="0,0,0,15">
+            <TextBlock x:Name="TitleTextBlock" Text="📊 Диаграмма эффективности" 
+                       FontSize="18" FontWeight="Bold" Foreground="White" 
+                       HorizontalAlignment="Center" Margin="15,10"/>
+        </Border>
+
+        <!-- Основная область: легенда + диаграмма -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Легенда -->
+            <Border Grid.Column="0" Background="White" CornerRadius="8" Padding="10" Margin="0,0,10,0"
+                    BorderBrush="{StaticResource DarkBeigeColor}" BorderThickness="1">
+                <StackPanel>
+                    <TextBlock Text="📋 Легенда" FontWeight="Bold" FontSize="14" 
+                               Foreground="{StaticResource GreenColor}" Margin="0,0,0,10"
+                               HorizontalAlignment="Center"/>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="450">
+                        <StackPanel x:Name="LegendPanel"/>
+                    </ScrollViewer>
+                </StackPanel>
+            </Border>
+
+            <!-- Диаграмма -->
+            <Border Grid.Column="1" Background="White" CornerRadius="8" Padding="15" Margin="0,0,0,10"
+                    BorderBrush="{StaticResource DarkBeigeColor}" BorderThickness="1">
+                <lvc:CartesianChart x:Name="MainChart">
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="Показатель"/>
+                    </lvc:CartesianChart.AxisX>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Значение (%)" MinValue="0" MaxValue="100"/>
+                    </lvc:CartesianChart.AxisY>
+                </lvc:CartesianChart>
+            </Border>
+        </Grid>
+
+        <!-- Кнопки управления -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+            <Button x:Name="BarChartButton" Content="📊 Столбчатая" Style="{StaticResource GreenButtonStyle}" Click="BarChartButton_Click"/>
+            <Button x:Name="LineChartButton" Content="📈 Линейная" Style="{StaticResource GreenButtonStyle}" Click="LineChartButton_Click"/>
+            <Button x:Name="CloseButton" Content="🚪 Закрыть" Style="{StaticResource CloseButtonStyle}" Click="CloseButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

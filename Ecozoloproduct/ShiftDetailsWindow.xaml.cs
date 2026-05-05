@@ -15,6 +15,7 @@ namespace WpfApp2
         private int? currentShiftId = null;
         private string currentShiftInfo = "";
         private TimeSpan shiftDuration = TimeSpan.FromHours(12);
+        private DateTime? currentShiftDate = null; // Добавлено для хранения даты текущей смены
 
         public class ShiftDetails
         {
@@ -77,6 +78,7 @@ namespace WpfApp2
                             {
                                 int id = reader.GetInt32(0);
                                 DateTime date = reader.GetDateTime(1);
+                                currentShiftDate = date; // Сохраняем дату смены
                                 TimeSpan startTime = reader.GetTimeSpan(2);
                                 TimeSpan endTime = reader.GetTimeSpan(3);
 
@@ -96,6 +98,33 @@ namespace WpfApp2
                     MessageBox.Show($"Ошибка загрузки информации о смене: {ex.Message}", "Ошибка",
                                    MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+            }
+        }
+
+        // Метод для открытия окна эффективности
+        private void EfficiencyButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentShiftId.HasValue && currentShiftId.Value > 0 && currentShiftDate.HasValue)
+            {
+                // Открываем окно эффективности с фильтром по дате текущей смены
+                EfficiencyWindow efficiencyWindow = new EfficiencyWindow(currentUserRole, currentUserLogin);
+
+                // Устанавливаем даты в окне эффективности (только одна дата - день смены)
+                // Для этого нужно добавить метод в EfficiencyWindow для установки дат
+                efficiencyWindow.SetDateRange(currentShiftDate.Value, currentShiftDate.Value);
+                efficiencyWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                efficiencyWindow.WindowState = WindowState.Maximized;
+                efficiencyWindow.Show();
+                this.Close();
+            }
+            else
+            {
+                // Если не в режиме просмотра конкретной смены, открываем окно эффективности без фильтра
+                EfficiencyWindow efficiencyWindow = new EfficiencyWindow(currentUserRole, currentUserLogin);
+                efficiencyWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                efficiencyWindow.WindowState = WindowState.Maximized;
+                efficiencyWindow.Show();
+                this.Close();
             }
         }
 
@@ -433,7 +462,6 @@ namespace WpfApp2
 
                 int equipmentId = ((SimpleItem)EquipmentComboBox.SelectedItem).Id;
 
-                // Для обновления используем существующее время работы из записи
                 TimeSpan workTime = selected.EquipmentWorkTime;
 
                 double productionQuantity = 0;

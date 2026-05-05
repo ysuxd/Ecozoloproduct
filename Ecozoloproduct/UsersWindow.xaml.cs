@@ -148,7 +148,7 @@ namespace WpfApp2
                     }
 
                     // Добавление пользователя
-                    string addQuery = "INSERT INTO users (login, password, roleid, isblocked) VALUES (@login, @password, @roleid, FALSE)";
+                    string addQuery = "INSERT INTO users (login, password, roleid, isblocked, attempts) VALUES (@login, @password, @roleid, FALSE, 0)";
                     using (var addcmd = new NpgsqlCommand(addQuery, connection))
                     {
                         addcmd.Parameters.AddWithValue("@login", login);
@@ -295,7 +295,7 @@ namespace WpfApp2
                         try
                         {
                             connection.Open();
-                            string query = "UPDATE users SET isblocked = TRUE WHERE userid = @userId";
+                            string query = "UPDATE users SET isblocked = TRUE, attempts = 3 WHERE userid = @userId";
                             using (var cmd = new NpgsqlCommand(query, connection))
                             {
                                 cmd.Parameters.AddWithValue("@userId", selectedUser.UserId);
@@ -341,7 +341,7 @@ namespace WpfApp2
                         try
                         {
                             connection.Open();
-                            string query = "UPDATE users SET isblocked = FALSE WHERE userid = @userId";
+                            string query = "UPDATE users SET isblocked = FALSE, attempts = 0 WHERE userid = @userId";
                             using (var cmd = new NpgsqlCommand(query, connection))
                             {
                                 cmd.Parameters.AddWithValue("@userId", selectedUser.UserId);
