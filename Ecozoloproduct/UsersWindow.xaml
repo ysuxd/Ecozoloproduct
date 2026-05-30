@@ -86,6 +86,40 @@
             </Setter>
         </Style>
 
+        <!-- Стиль для кнопки выхода -->
+        <Style x:Key="ExitButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#E74C3C"/>
+            <Setter Property="Foreground" Value="{StaticResource WhiteColor}"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="MinWidth" Value="100"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="15,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="6" 
+                                BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#C0392B"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#A93226"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <!-- Стиль для текстовых полей -->
         <Style TargetType="TextBox">
             <Setter Property="Height" Value="38"/>
@@ -194,7 +228,7 @@
             </Grid>
         </Border>
 
-        <!-- Таблица данных - столбцы растягиваются по ширине -->
+        <!-- Таблица данных -->
         <DataGrid x:Name="UsersDataGrid" Grid.Row="1" 
                   AutoGenerateColumns="False" 
                   CanUserAddRows="False" 
@@ -219,7 +253,6 @@
             </DataGrid.Resources>
 
             <DataGrid.Columns>
-                <!-- ID - фиксированная ширина, текст по центру -->
                 <DataGridTextColumn Header="ID" Binding="{Binding UserId}" Width="60">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
@@ -230,7 +263,6 @@
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
 
-                <!-- Логин -->
                 <DataGridTextColumn Header="Логин" Binding="{Binding Login}" Width="2*">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
@@ -240,7 +272,6 @@
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
 
-                <!-- Пароль -->
                 <DataGridTextColumn Header="Пароль" Binding="{Binding Password}" Width="1.5*">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
@@ -249,7 +280,6 @@
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
 
-                <!-- Роль - текст по центру -->
                 <DataGridTextColumn Header="Роль" Binding="{Binding Role}" Width="1.5*">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
@@ -260,7 +290,6 @@
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
 
-                <!-- Заблокирован - фиксированная ширина -->
                 <DataGridCheckBoxColumn Header="Заблокирован" Binding="{Binding IsBlocked}" Width="110">
                     <DataGridCheckBoxColumn.ElementStyle>
                         <Style TargetType="CheckBox">
@@ -269,7 +298,6 @@
                     </DataGridCheckBoxColumn.ElementStyle>
                 </DataGridCheckBoxColumn>
 
-                <!-- Дата последнего входа - текст по центру -->
                 <DataGridTextColumn Header="Дата последнего входа" Width="2*">
                     <DataGridTextColumn.Binding>
                         <Binding Path="LastLoginDate" StringFormat="dd.MM.yyyy HH:mm"/>
@@ -305,33 +333,49 @@
                                FontFamily="Segoe UI"/>
                 </Border>
 
-                <!-- Панель ввода данных - горизонтальное расположение -->
-                <WrapPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <!-- Панель ввода данных -->
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
                     <!-- Логин -->
-                    <TextBlock Text="Логин:" Style="{StaticResource LabelStyle}" VerticalAlignment="Center"/>
-                    <TextBox x:Name="LoginTextBox" Width="160" Height="38" VerticalAlignment="Center"/>
+                    <TextBlock Text="Логин:" Style="{StaticResource LabelStyle}" VerticalAlignment="Center" Grid.Column="0"/>
+                    <TextBox x:Name="LoginTextBox" Width="160" Height="38" VerticalAlignment="Center" Grid.Column="1"/>
 
                     <!-- Пароль -->
-                    <TextBlock Text="Пароль:" Style="{StaticResource LabelStyle}" VerticalAlignment="Center" Margin="15,0,5,0"/>
-                    <PasswordBox x:Name="PassBox" Width="160" Height="38" VerticalAlignment="Center"/>
+                    <TextBlock Text="Пароль:" Style="{StaticResource LabelStyle}" VerticalAlignment="Center" Grid.Column="2" Margin="15,0,5,0"/>
+                    <PasswordBox x:Name="PassBox" Width="160" Height="38" VerticalAlignment="Center" Grid.Column="3"/>
 
                     <!-- Роль -->
-                    <TextBlock Text="Роль:" Style="{StaticResource LabelStyle}" VerticalAlignment="Center" Margin="15,0,5,0"/>
-                    <ComboBox x:Name="RoleBox" Width="160" Height="38" VerticalAlignment="Center">
+                    <TextBlock Text="Роль:" Style="{StaticResource LabelStyle}" VerticalAlignment="Center" Grid.Column="4" Margin="15,0,5,0"/>
+                    <ComboBox x:Name="RoleBox" Width="160" Height="38" VerticalAlignment="Center" Grid.Column="5">
                         <ComboBoxItem Content="Администратор" Foreground="#5A8F4C" Background="#FFFFFF"/>
                         <ComboBoxItem Content="Пользователь" Foreground="#5A8F4C" Background="#FFFFFF"/>
                         <ComboBoxItem Content="Модератор" Foreground="#5A8F4C" Background="#FFFFFF"/>
                     </ComboBox>
 
-                    <!-- Кнопки -->
-                    <Button x:Name="AddButton" Content="➕ Добавить" Style="{StaticResource GreenButtonStyle}" Click="AddButton_Click"/>
-                    <Button x:Name="UpdateButton" Content="✏️ Обновить" Style="{StaticResource GreenButtonStyle}" Click="UpdateButton_Click"/>
-                    <Button x:Name="DeleteButton" Content="🗑 Удалить" Style="{StaticResource BeigeButtonStyle}" Click="DeleteButton_Click"/>
-                    <Button x:Name="BlockButton" Content="🔒 Блокировать" Style="{StaticResource BeigeButtonStyle}" Click="BlockButton_Click"/>
-                    <Button x:Name="UnblockButton" Content="🔓 Разблокировать" Style="{StaticResource BeigeButtonStyle}" Click="UnblockButton_Click"/>
-                    <Button x:Name="RefreshButton" Content="🔄 Обновить" Style="{StaticResource GreenButtonStyle}" Click="RefreshButton_Click"/>
-                </WrapPanel>
-                
+                    <!-- Кнопки действий -->
+                    <StackPanel Grid.Column="6" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,0,0,0">
+                        <Button x:Name="AddButton" Content="➕ Добавить" Style="{StaticResource GreenButtonStyle}" Click="AddButton_Click"/>
+                        <Button x:Name="UpdateButton" Content="✏️ Обновить" Style="{StaticResource GreenButtonStyle}" Click="UpdateButton_Click"/>
+                        <Button x:Name="DeleteButton" Content="🗑 Удалить" Style="{StaticResource BeigeButtonStyle}" Click="DeleteButton_Click"/>
+                        <Button x:Name="BlockButton" Content="🔒 Блокировать" Style="{StaticResource BeigeButtonStyle}" Click="BlockButton_Click"/>
+                        <Button x:Name="UnblockButton" Content="🔓 Разблокировать" Style="{StaticResource BeigeButtonStyle}" Click="UnblockButton_Click"/>
+                        <Button x:Name="RefreshButton" Content="🔄 Обновить" Style="{StaticResource GreenButtonStyle}" Click="RefreshButton_Click"/>
+                        <Button x:Name="ExitButton" Content="🚪 Выход" Style="{StaticResource ExitButtonStyle}" Click="ExitButton_Click"/>
+                    </StackPanel>
+
+                    
+                    
+                </Grid>
             </Grid>
         </Border>
     </Grid>

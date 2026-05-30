@@ -84,6 +84,40 @@
             </Setter>
         </Style>
 
+        <!-- Стиль для кнопки выхода -->
+        <Style x:Key="ExitButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#E74C3C"/>
+            <Setter Property="Foreground" Value="{StaticResource WhiteColor}"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="MinWidth" Value="100"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="15,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="6" 
+                                BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#C0392B"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#A93226"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <!-- Стиль для текстовых полей -->
         <Style TargetType="TextBox">
             <Setter Property="Height" Value="38"/>
@@ -193,7 +227,6 @@
             </DataGrid.Resources>
 
             <DataGrid.Columns>
-                <!-- ID роли - фиксированная ширина, текст по центру -->
                 <DataGridTextColumn Header="ID роли" Binding="{Binding RoleId}" Width="120">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
@@ -205,7 +238,6 @@
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
 
-                <!-- Название роли - занимает всё оставшееся пространство, текст по центру -->
                 <DataGridTextColumn Header="Название роли" Binding="{Binding RoleName}" Width="*">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
@@ -239,20 +271,39 @@
                                FontFamily="Segoe UI"/>
                 </Border>
 
-                <!-- Панель ввода данных - строка, а не столбец -->
-                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <!-- Панель ввода данных и кнопки -->
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
                     <!-- Название роли -->
-                    <TextBlock Text="Название роли:" Style="{StaticResource LabelStyle}" VerticalAlignment="Center"/>
+                    <TextBlock Text="Название роли:" Style="{StaticResource LabelStyle}" VerticalAlignment="Center" Grid.Column="0"/>
                     <TextBox x:Name="RoleNameTextBox" Width="250" Height="38" 
                              VerticalAlignment="Center"
-                             ToolTip="Введите название роли"/>
+                             ToolTip="Введите название роли"
+                             Grid.Column="1"/>
 
-                    <!-- Кнопки -->
-                    <Button x:Name="AddButton" Content="➕ Добавить" Style="{StaticResource GreenButtonStyle}" Click="AddButton_Click"/>
-                    <Button x:Name="UpdateButton" Content="✏️ Обновить" Style="{StaticResource GreenButtonStyle}" Click="UpdateButton_Click"/>
-                    <Button x:Name="DeleteButton" Content="🗑 Удалить" Style="{StaticResource BeigeButtonStyle}" Click="DeleteButton_Click"/>
-                    <Button x:Name="RefreshButton" Content="🔄 Обновить список" Style="{StaticResource GreenButtonStyle}" Click="RefreshButton_Click"/>
-                </StackPanel>
+                    <!-- Кнопки действий -->
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,0,0,0">
+                        <Button x:Name="AddButton" Content="➕ Добавить" Style="{StaticResource GreenButtonStyle}" Click="AddButton_Click"/>
+                        <Button x:Name="UpdateButton" Content="✏️ Обновить" Style="{StaticResource GreenButtonStyle}" Click="UpdateButton_Click"/>
+                        <Button x:Name="DeleteButton" Content="🗑 Удалить" Style="{StaticResource BeigeButtonStyle}" Click="DeleteButton_Click"/>
+                        <Button x:Name="RefreshButton" Content="🔄 Обновить список" Style="{StaticResource GreenButtonStyle}" Click="RefreshButton_Click"/>
+                    </StackPanel>
+
+                    <!-- Кнопка выхода -->
+                    <Button x:Name="ExitButton" 
+                            Content="🚪 Выход" 
+                            Style="{StaticResource ExitButtonStyle}"
+                            Grid.Column="3"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            Click="ExitButton_Click"/>
+                </Grid>
             </Grid>
         </Border>
     </Grid>

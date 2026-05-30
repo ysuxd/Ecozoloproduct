@@ -7,12 +7,12 @@ using WpfApp.Database;
 
 namespace WpfApp2
 {
-    public partial class MainWindow : Window
+    public partial class LoginWindow : Window
     {
         private DatabaseConnection dbconnection = new DatabaseConnection();
         private string currentCaptcha = "";
 
-        public MainWindow()
+        public LoginWindow()
         {
             InitializeComponent();
 
@@ -132,11 +132,6 @@ namespace WpfApp2
                                             operatorWindow.Show();
                                             break;
 
-                                        default:
-                                            UserWindow userWindow = new UserWindow(userLogin);
-                                            userWindow.Closed += (s, args) => this.Close();
-                                            userWindow.Show();
-                                            break;
                                     }
                                 }
                                 else

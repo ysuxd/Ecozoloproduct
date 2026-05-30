@@ -6,39 +6,180 @@
         WindowStartupLocation="CenterScreen"
         Background="#F5F0E8">
 
+    <Window.Resources>
+        <!-- Мягкие цвета для заголовков -->
+        <SolidColorBrush x:Key="HeaderGreen" Color="#7BAF6A"/>
+        <SolidColorBrush x:Key="HeaderGray" Color="#A6ACAF"/>
+        
+        
+
+        <!-- Стиль для кнопок внутри панели -->
+        <Style x:Key="PanelButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="240"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Margin" Value="8"/>
+            <Setter Property="Background" Value="#5A8F4C"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="10" 
+                                BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#7BAF6A"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#3D6B2E"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Стиль для кнопки эффективности -->
+        <Style x:Key="EfficiencyButtonStyle" TargetType="Button" BasedOn="{StaticResource PanelButtonStyle}">
+            <Setter Property="Background" Value="#3498DB"/>
+            <Setter Property="Width" Value="260"/>
+        </Style>
+
+        <Style x:Key="ExitButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#E74C3C"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Width" Value="240"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Margin" Value="8"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                        CornerRadius="10" 
+                        BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                      VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#C0392B"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#A93226"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Стиль для заголовка панели -->
+        <Style x:Key="PanelHeaderStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="10,10,0,0"/>
+            <Setter Property="Padding" Value="15,12"/>
+        </Style>
+    </Window.Resources>
+
     <Grid Margin="20" Background="#F5F0E8">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0" Background="#5A8F4C" CornerRadius="8" Margin="0,0,0,15">
+        <!-- Заголовок окна -->
+        <Border Grid.Row="0" Background="#5A8F4C" CornerRadius="10" Margin="0,0,0,15">
             <TextBlock Text="🔬 ПАНЕЛЬ ТЕХНОЛОГА 🔬" 
-                       FontSize="24" 
+                       FontSize="26" 
                        FontWeight="Bold" 
                        Foreground="White" 
                        HorizontalAlignment="Center" 
-                       Margin="20,15"
+                       Padding="25,18"
                        FontFamily="Segoe UI"/>
         </Border>
 
-        <Border Grid.Row="1" Background="White" CornerRadius="8" Padding="20" Margin="0,5,0,0"
-                BorderBrush="#E8DCC8" BorderThickness="1">
-            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock x:Name="WelcomeTextBlock" Text="Добро пожаловать!" 
-                           FontSize="18" 
-                           FontWeight="Bold" 
-                           Foreground="#4A3728"
-                           HorizontalAlignment="Center"
-                           Margin="0,0,0,20"/>
-                <TextBlock Text="Вы можете анализировать технологические процессы и качество продукции" 
-                           FontSize="14" 
-                           Foreground="#8B9A6E"
-                           HorizontalAlignment="Center"
-                           TextWrapping="Wrap"/>
-                <Button x:Name="ExitButton" Content="🚪 Выход" Width="150" Height="40" Margin="0,20,0,0"
-                        Background="#E8DCC8" Foreground="#4A3728" FontWeight="Bold" Click="ExitButton_Click"/>
-            </StackPanel>
-        </Border>
+        <!-- Контейнер для панелей -->
+        <UniformGrid Grid.Row="1" Rows="4" Columns="1" Margin="80,15,80,15">
+
+            <!-- Панель 1: Просмотр оборудования -->
+            <Border Background="White" CornerRadius="10" Margin="0,10,0,10"
+                    BorderBrush="#E8DCC8" BorderThickness="1">
+                <StackPanel>
+                    <Border Style="{StaticResource PanelHeaderStyle}" Background="#7BAF6A">
+                        <TextBlock Text="🏭 ПРОСМОТР ОБОРУДОВАНИЯ" 
+                                   FontWeight="Bold" 
+                                   Foreground="White" 
+                                   FontSize="15"
+                                   HorizontalAlignment="Center"/>
+                    </Border>
+                    <WrapPanel HorizontalAlignment="Center" Margin="20,15,20,15">
+                        <Button x:Name="EquipmentButton" Content="🏭 Оборудование" Style="{StaticResource PanelButtonStyle}" Click="EquipmentButton_Click"/>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Панель 2: Учет работы -->
+            <Border Background="White" CornerRadius="10" Margin="0,10,0,10"
+                    BorderBrush="#E8DCC8" BorderThickness="1">
+                <StackPanel>
+                    <Border Style="{StaticResource PanelHeaderStyle}" Background="#7BAF6A">
+                        <TextBlock Text="📝 УЧЕТ РАБОТЫ" 
+                                   FontWeight="Bold" 
+                                   Foreground="White" 
+                                   FontSize="15"
+                                   HorizontalAlignment="Center"/>
+                    </Border>
+                    <WrapPanel HorizontalAlignment="Center" Margin="20,15,20,15">
+                        <Button x:Name="ShiftsButton" Content="⏰ Смены" Style="{StaticResource PanelButtonStyle}" Click="ShiftsButton_Click"/>
+                        <Button x:Name="ShiftDetailsButton" Content="📋 Детали смен" Style="{StaticResource PanelButtonStyle}" Click="ShiftDetailsButton_Click"/>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Панель 3: Аналитика -->
+            <Border Background="White" CornerRadius="10" Margin="0,10,0,10"
+                    BorderBrush="#E8DCC8" BorderThickness="1">
+                <StackPanel>
+                    <Border Style="{StaticResource PanelHeaderStyle}" Background="#7BAF6A">
+                        <TextBlock Text="📊 АНАЛИТИКА" 
+                                   FontWeight="Bold" 
+                                   Foreground="White" 
+                                   FontSize="15"
+                                   HorizontalAlignment="Center"/>
+                    </Border>
+                    <WrapPanel HorizontalAlignment="Center" Margin="20,15,20,15">
+                        <Button x:Name="EfficiencyButton" Content="📈 Эффективность OEE" Style="{StaticResource PanelButtonStyle}" Click="EfficiencyButton_Click"/>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Панель 4: Система (Выход) -->
+            <Border Background="White" CornerRadius="10" Margin="0,10,0,10"
+                    BorderBrush="#E8DCC8" BorderThickness="1">
+                <StackPanel>
+                    <Border Style="{StaticResource PanelHeaderStyle}" Background="#A6ACAF">
+                        <TextBlock Text="⚙️ СИСТЕМА" 
+                                   FontWeight="Bold" 
+                                   Foreground="White" 
+                                   FontSize="15"
+                                   HorizontalAlignment="Center"/>
+                    </Border>
+                    <WrapPanel HorizontalAlignment="Center" Margin="20,15,20,15">
+                        <Button x:Name="ExitButton" Content="🚪 Выход" Style="{StaticResource ExitButtonStyle}" Click="ExitButton_Click"/>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+
+        </UniformGrid>
     </Grid>
 </Window>

@@ -244,11 +244,26 @@ namespace WpfApp2
                     adminWindow.WindowState = WindowState.Maximized;
                     adminWindow.Show();
                 }
-                else if (currentUserRole == "Пользователь")
+                else if (currentUserRole == "Технолог")
                 {
-                    UserWindow userWindow = new UserWindow(currentUserLogin);
-                    userWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                    userWindow.Show();
+                    TechnologistWindow technologistWindow = new TechnologistWindow(currentUserLogin);
+                    technologistWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                    technologistWindow.WindowState = WindowState.Maximized;
+                    technologistWindow.Show();
+                }
+                else if (currentUserRole == "Мастер смены")
+                {
+                    MasterWindow masterWindow = new MasterWindow(currentUserLogin);
+                    masterWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                    masterWindow.WindowState = WindowState.Maximized;
+                    masterWindow.Show();
+                }
+                else if (currentUserRole == "Оператор")
+                {
+                    OperatorWindow operatorWindow = new OperatorWindow(currentUserLogin);
+                    operatorWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                    operatorWindow.WindowState = WindowState.Maximized;
+                    operatorWindow.Show();
                 }
 
                 // Закрываем текущее окно

@@ -84,10 +84,10 @@ namespace WpfApp2
 
             if (result == MessageBoxResult.Yes)
             {
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                mainWindow.WindowState = WindowState.Maximized;
-                mainWindow.Show();
+                LoginWindow loginWindow = new LoginWindow();
+                loginWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                loginWindow.WindowState = WindowState.Maximized;
+                loginWindow.Show();
                 this.Close();
             }
         }

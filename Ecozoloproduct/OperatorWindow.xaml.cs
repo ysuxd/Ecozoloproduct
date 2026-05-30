@@ -10,8 +10,34 @@ namespace WpfApp2
         {
             InitializeComponent();
             currentUser = userName;
-            WelcomeTextBlock.Text = $"Добро пожаловать, {userName}!";
             this.Title = $"Панель оператора - {userName}";
+        }
+
+        private void EquipmentButton_Click(object sender, RoutedEventArgs e)
+        {
+            EquipmentWindow equipmentWindow = new EquipmentWindow("Оператор", currentUser);
+            equipmentWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            equipmentWindow.WindowState = WindowState.Maximized;
+            equipmentWindow.Show();
+            this.Close();
+        }
+
+        private void StatusButton_Click(object sender, RoutedEventArgs e)
+        {
+            StatusWindow statusWindow = new StatusWindow("Оператор", currentUser);
+            statusWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            statusWindow.WindowState = WindowState.Maximized;
+            statusWindow.Show();
+            this.Close();
+        }
+
+        private void DowntimeRecordButton_Click(object sender, RoutedEventArgs e)
+        {
+            DowntimeRecordWindow downtimeRecordWindow = new DowntimeRecordWindow("Оператор", currentUser);
+            downtimeRecordWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            downtimeRecordWindow.WindowState = WindowState.Maximized;
+            downtimeRecordWindow.Show();
+            this.Close();
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
@@ -21,10 +47,10 @@ namespace WpfApp2
 
             if (result == MessageBoxResult.Yes)
             {
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                mainWindow.WindowState = WindowState.Maximized;
-                mainWindow.Show();
+                LoginWindow loginWindow = new LoginWindow();
+                loginWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                loginWindow.WindowState = WindowState.Maximized;
+                loginWindow.Show();
                 this.Close();
             }
         }

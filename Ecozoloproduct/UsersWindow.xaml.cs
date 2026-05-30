@@ -413,5 +413,20 @@ namespace WpfApp2
                 PassBox.Password = string.Empty;
             }
         }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите выйти?",
+                "Выход", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                AdminWindow adminWindow = new AdminWindow("");
+                adminWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                adminWindow.WindowState = WindowState.Maximized;
+                adminWindow.Show();
+                this.Close();
+            }
+        }
     }
 }
